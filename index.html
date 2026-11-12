@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Heres Law | Find what suits your family</title>
+<link rel="icon" href="shield.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:opsz,wght@8..60,600;8..60,700&family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#001934; --gold:#a87f4b; --gold-dk:#8a6638; --gold-lt:#c9a977;
+  --teal:#00706e; --teal-bg:#e6f2f1; --paper:#ffffff; --card:#f4f5f7; --line:#e1e4e9;
+  --ink:#1c2430; --body:#3b4451; --muted:#6b7280; --error:#b42318;
+  --serif:"Source Serif 4", Cambria, Georgia, serif; --sans:"Work Sans", Calibri, Arial, sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.55}
+h1,h2,h3{font-family:var(--serif);margin:0;color:var(--ink);text-wrap:balance}
+p{margin:0 0 12px;color:var(--body)}
+a{color:var(--teal)}
+.wrap{max-width:720px;margin:0 auto;padding:0 18px}
+[hidden]{display:none!important}
+/* header */
+.hero{background:var(--navy);color:#fff;padding:18px 0 26px}
+.brandrow{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:22px}
+.brandrow .hl{height:42px;width:auto}
+.host{display:flex;align-items:center;gap:8px;background:#fff;border-radius:10px;padding:5px 9px}
+.host span{font-size:11px;line-height:1.2;color:var(--navy);font-weight:600;max-width:52px}
+.host img{height:40px;width:auto}
+.kicker{font-size:13px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--gold-lt);margin-bottom:8px}
+.hero h1{color:#fff;font-size:clamp(28px,6.4vw,40px);line-height:1.12}
+.hero p{color:#dfe6ee;margin:12px 0 0;max-width:58ch}
+main{padding:26px 0 10px}
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font:inherit;font-weight:600;font-size:18px;border:0;border-radius:12px;padding:15px 20px;cursor:pointer;text-decoration:none;min-height:54px}
+.btn-primary{background:var(--navy);color:#fff;width:100%}
+.btn-gold{background:var(--gold);color:var(--navy);width:100%}
+.btn-ghost{background:none;color:var(--teal);padding:10px 4px;min-height:44px;font-size:16px}
+.btn:focus-visible{outline:3px solid var(--gold-lt);outline-offset:2px}
+.btn[disabled]{opacity:.6;cursor:progress}
+/* intro */
+.points{display:grid;gap:10px;margin:6px 0 22px;padding:0;list-style:none}
+.points li{display:flex;gap:12px;align-items:flex-start;background:var(--card);border-radius:12px;padding:12px 14px;color:var(--body)}
+.points b{flex:none;width:28px;height:28px;border-radius:50%;background:var(--teal);color:#fff;display:grid;place-items:center;font-size:14px}
+.free{margin-top:18px;background:var(--teal-bg);border-radius:14px;padding:14px 16px}
+.free strong{font-family:var(--serif);font-size:19px;color:var(--navy);display:block}
+.free p{margin:2px 0 0;font-size:16px}
+/* question */
+.progress{height:6px;background:var(--line);border-radius:6px;overflow:hidden;margin-bottom:18px}
+.progress span{display:block;height:100%;background:var(--teal);width:0;transition:width .25s}
+.qcount{font-size:14px;color:var(--muted);margin-bottom:6px}
+.qtitle{font-size:clamp(23px,5.2vw,29px);line-height:1.25;margin-bottom:10px}
+.qhelp{font-size:16px;color:var(--muted);margin-bottom:20px}
+.yn{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.yn .btn{background:#fff;border:2px solid var(--navy);color:var(--navy);font-size:20px;min-height:64px}
+.yn .btn:active{background:var(--teal-bg)}
+.qnav{display:flex;justify-content:space-between;align-items:center;margin-top:14px}
+/* results */
+.rec{background:var(--card);border-radius:14px;padding:16px 16px 14px;margin-bottom:12px}
+.rec .top{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+.rec h3{font-size:20px}
+.rec .price{font-weight:600;color:var(--navy);white-space:nowrap}
+.rec p{margin:6px 0 0;font-size:16px}
+.tag{display:inline-block;font-size:12.5px;font-weight:600;letter-spacing:.03em;color:var(--teal);background:var(--teal-bg);border-radius:999px;padding:3px 10px;margin:8px 6px 0 0}
+.trustlist{margin:8px 0 0;padding:0;list-style:none}
+.trustlist li{margin:8px 0 0;font-size:16px;color:var(--body)}
+.trustlist strong{color:var(--ink)}
+.total{background:var(--navy);color:#fff;border-radius:14px;padding:16px;margin:16px 0}
+.total .row{display:flex;justify-content:space-between;gap:12px;margin:3px 0;font-size:16px;color:#dfe6ee}
+.total .row.big{font-size:20px;color:#fff;font-weight:600;font-family:var(--serif);border-top:1px solid rgba(255,255,255,.2);padding-top:8px;margin-top:8px}
+.note{font-size:14.5px;color:var(--muted)}
+.choice2{display:grid;gap:12px;margin-top:18px}
+.choice2 .btn{flex-direction:column;align-items:flex-start;text-align:left;padding:16px 18px}
+.choice2 .btn small{font-weight:400;font-size:15px;opacity:.9}
+.none{background:var(--teal-bg);border-radius:14px;padding:16px}
+/* form */
+.formcard{border:1px solid var(--line);border-radius:16px;padding:20px 16px;box-shadow:0 1px 3px rgba(0,25,52,.06)}
+@media(min-width:620px){.formcard{padding:26px}}
+.field{margin-bottom:16px}
+label.lbl{display:block;font-weight:600;margin-bottom:6px}
+.opt{font-weight:400;color:var(--muted);font-size:15px}
+input[type=text],input[type=email],input[type=tel]{width:100%;font:inherit;font-size:17px;padding:13px 14px;border:1.5px solid #c9ced6;border-radius:10px;background:#fff;color:var(--ink)}
+input:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(0,112,110,.18)}
+.tick{display:flex;gap:12px;align-items:flex-start;font-size:15.5px;color:var(--body);margin-bottom:14px}
+.tick input{width:22px;height:22px;margin:2px 0 0;flex:none;accent-color:var(--teal)}
+.tick.strong{background:var(--teal-bg);border-radius:12px;padding:12px 14px;color:var(--ink)}
+.err{color:var(--error);font-size:15px;margin:6px 0 0;display:none}
+.invalid .err{display:block}
+.invalid input[type=text],.invalid input[type=email],.invalid input[type=tel]{border-color:var(--error)}
+.formerr{display:none;background:#fdecea;color:var(--error);border-radius:10px;padding:12px 14px;margin-top:14px;font-size:15.5px}
+.hp{position:absolute;left:-5000px;width:1px;height:1px;overflow:hidden}
+.pathlabel{display:inline-block;font-size:13px;font-weight:600;color:var(--gold-dk);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px}
+/* manual pick */
+.picks{display:grid;gap:10px;margin:8px 0 16px}
+.pick{display:flex;gap:12px;align-items:flex-start;border:1.5px solid #c9ced6;border-radius:12px;padding:12px 14px;cursor:pointer}
+.pick input{width:22px;height:22px;margin:1px 0 0;accent-color:var(--teal);flex:none}
+.pick:has(input:checked){border-color:var(--teal);background:var(--teal-bg)}
+/* thanks */
+.okicon{width:58px;height:58px;border-radius:50%;background:var(--teal);display:grid;place-items:center;margin-bottom:14px}
+.okicon svg{width:30px;height:30px;stroke:#fff;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
+footer{margin-top:34px;background:var(--navy);color:#c7d0dc;padding:22px 0 26px;font-size:13.5px;line-height:1.5}
+footer p{color:#c7d0dc;margin-bottom:10px}
+footer a{color:var(--gold-lt)}
+footer .contact{color:#fff;font-size:15px}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div class="brandrow">
+      <img class="hl" src="heres-law-logo.png" alt="Heres Law">
+      <div class="host"><span>Hosted by</span><img src="wpcc-logo.png" alt="Wiltshire Parent Carer Council"></div>
+    </div>
+    <div class="kicker">Wills and Trusts workshop</div>
+    <h1 id="h1">Find what suits your family</h1>
+  </div>
+</header>
+
+<main>
+<div class="wrap" id="app" aria-live="polite">
+
+  <!-- 1. intro -->
+  <section id="s-intro">
+    <p>Answer a few yes or no questions and we will show you which Heres Law services may suit you, with our fixed fees.</p>
+    <ul class="points">
+      <li><b>1</b><span>About 10 short questions. Most people finish in two minutes.</span></li>
+      <li><b>2</b><span>See your suggested services and an estimated fixed fee.</span></li>
+      <li><b>3</b><span>Book a free consultation if you are ready, or have your results emailed to you.</span></li>
+    </ul>
+    <button class="btn btn-primary" id="start">Start the questions</button>
+    <p style="text-align:center;margin-top:10px"><button class="btn btn-ghost" id="skip">I already know what I need</button></p>
+    <div class="free"><strong>Your first consultation is free</strong><p>Up to an hour, one to one, about your family. All our fees are fixed, agreed upfront and include VAT.</p></div>
+  </section>
+
+  <!-- 2. question -->
+  <section id="s-q" hidden>
+    <div class="progress" aria-hidden="true"><span id="bar"></span></div>
+    <div class="qcount" id="qcount"></div>
+    <h2 class="qtitle" id="qtitle" tabindex="-1"></h2>
+    <p class="qhelp" id="qhelp"></p>
+    <div class="yn">
+      <button class="btn" id="yes">Yes</button>
+      <button class="btn" id="no">No</button>
+    </div>
+    <div class="qnav"><button class="btn btn-ghost" id="back">&larr; Back</button></div>
+  </section>
+
+  <!-- 2b. manual pick -->
+  <section id="s-pick" hidden>
+    <h2 class="qtitle" tabindex="-1" id="picktitle">What would you like?</h2>
+    <p class="qhelp">Tick everything that applies. Your consultant will confirm the details.</p>
+    <label class="tick strong"><input type="checkbox" id="p-mirror"><span>I am planning together with my partner (mirror documents)</span></label>
+    <div class="picks">
+      <label class="pick"><input type="checkbox" value="WILL"><span><strong>A Will</strong></span></label>
+      <label class="pick"><input type="checkbox" value="ROO"><span><strong>Right of Occupation Trust</strong> in my Will</span></label>
+      <label class="pick"><input type="checkbox" value="LIT"><span><strong>Life Interest Trust</strong> in my Will</span></label>
+      <label class="pick"><input type="checkbox" value="FLIT"><span><strong>Flexible Life Interest Trust</strong> in my Will</span></label>
+      <label class="pick"><input type="checkbox" value="DT"><span><strong>Discretionary Trust</strong> in my Will</span></label>
+      <label class="pick"><input type="checkbox" value="VDT"><span><strong>Vulnerable Person's Discretionary Trust</strong> in my Will</span></label>
+      <label class="pick"><input type="checkbox" value="LPA"><span><strong>Lasting Powers of Attorney</strong> (both types)</span></label>
+      <label class="pick"><input type="checkbox" value="SEV"><span><strong>Severing a joint tenancy</strong> on my home</span></label>
+    </div>
+    <p class="err" id="pickerr" style="display:none">Please tick at least one.</p>
+    <button class="btn btn-primary" id="pickgo">See my fees</button>
+    <div class="qnav"><button class="btn btn-ghost" id="pickback">&larr; Back</button></div>
+  </section>
+
+  <!-- 3. results -->
+  <section id="s-res" hidden>
+    <h2 class="qtitle" id="restitle" tabindex="-1">What may suit you</h2>
+    <p class="qhelp" id="ressub"></p>
+    <div id="recs"></div>
+    <div id="totalbox"></div>
+    <p class="note">This is a general guide based on your answers, not legal advice. In your free consultation we confirm what you need, and your fixed fee is set out in writing before any work starts.</p>
+    <div id="choicebox">
+      <h2 style="font-size:24px;margin-top:22px">How would you like to go ahead?</h2>
+      <div class="choice2">
+        <button class="btn btn-primary" id="go-ready">I'm ready to go ahead<small>Book my free consultation. We will call you within 48 hours.</small></button>
+        <button class="btn btn-gold" id="go-info">Not yet, email me my results<small>No call. Book whenever you are ready.</small></button>
+      </div>
+    </div>
+    <div class="qnav"><button class="btn btn-ghost" id="resback">&larr; Change my answers</button></div>
+  </section>
+
+  <!-- 4. details -->
+  <section id="s-form" hidden>
+    <span class="pathlabel" id="pathlabel"></span>
+    <h2 class="qtitle" id="formtitle" tabindex="-1">Your details</h2>
+    <p class="qhelp" id="formsub"></p>
+    <div class="formcard">
+      <form id="f" novalidate>
+        <div class="field" data-f="fullName"><label class="lbl" for="fullName">Your full name</label><input type="text" id="fullName" autocomplete="name" maxlength="120"><p class="err">Please enter your full name.</p></div>
+        <div class="field" id="partnerField"><label class="lbl" for="partnerName">Your partner's name <span class="opt">(optional)</span></label><input type="text" id="partnerName" autocomplete="off" maxlength="120"></div>
+        <div class="field" data-f="mobile"><label class="lbl" for="mobile">Mobile number <span class="opt" id="mobopt"></span></label><input type="tel" id="mobile" autocomplete="tel" inputmode="tel" maxlength="30"><p class="err">Please enter a mobile number we can call.</p></div>
+        <div class="field" data-f="email"><label class="lbl" for="email">Email address</label><input type="email" id="email" autocomplete="email" inputmode="email" maxlength="160"><p class="err">Please enter a valid email address.</p></div>
+        <div class="hp" aria-hidden="true"><label for="website">Leave this empty</label><input type="text" id="website" tabindex="-1" autocomplete="off"></div>
+        <div data-f="ready" id="readyField"><label class="tick strong"><input type="checkbox" id="ready"><span>I have seen the fees and I am ready to go ahead if the consultation confirms it is right for me.</span></label><p class="err" style="margin-top:-8px;margin-bottom:12px">Please tick to book. If you are not ready yet, go back and choose "email me my results".</p></div>
+        <div data-f="consent"><label class="tick"><input type="checkbox" id="consent"><span>I agree to Heres Law contacting me by phone or email about this enquiry. Read our <a href="https://www.hereslaw.co.uk/privacy-policy.html" target="_blank" rel="noopener">privacy policy</a>.</span></label><p class="err" style="margin-top:-8px;margin-bottom:12px">Please tick to let us contact you.</p></div>
+        <button class="btn btn-primary" type="submit" id="send">Send</button>
+        <div class="formerr" id="formerr" role="alert"></div>
+      </form>
+    </div>
+    <div class="qnav"><button class="btn btn-ghost" id="formback">&larr; Back to my results</button></div>
+  </section>
+
+  <!-- 5. thanks -->
+  <section id="s-done" hidden>
+    <div class="okicon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg></div>
+    <h2 class="qtitle" id="donetitle" tabindex="-1">Thank you</h2>
+    <p id="donetext"></p>
+    <p>If you need us sooner, call <a href="tel:+442035145929">020 3514 5929</a>.</p>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="contact">Heres Law &nbsp;|&nbsp; <a href="https://www.hereslaw.co.uk" target="_blank" rel="noopener">www.hereslaw.co.uk</a> &nbsp;|&nbsp; 020 3514 5929</p>
+    <p>Your answers and details go to Heres Law only, not to Wiltshire Parent Carer Council. We use them to reply to your enquiry. See our <a href="https://www.hereslaw.co.uk/privacy-policy.html" target="_blank" rel="noopener">privacy policy</a>. Fees are taken from our published fee guide at <a href="https://www.hereslaw.co.uk/fees.html" target="_blank" rel="noopener">hereslaw.co.uk/fees</a>.</p>
+    <p>Heres Law is the trading name of Heres Law Ltd, registered in England and Wales (No. 15076071). Registered office: Riverside House, Kings Reach Business Park, Yew Street, Stockport, SK4 2HD. Heres Law is a Full Member of the Institute of Professional Willwriters. It is not a firm of solicitors and is not regulated by the Solicitors Regulation Authority.</p>
+  </div>
+</footer>
+
+<script>
+var ENDPOINT = 'https://script.google.com/macros/s/AKfycbzrf8VqyuU04wKGHbLFiWeAEYX0VOHjorXeffPodYcnYY3EwhyDHE_DoeV3QmFHgaxsRQ/exec';
+(function(){
+  var FEES = {will:240, mirrorWill:360, trust:600, mirrorTrust:960, lpa:240, mirrorLpa:360, sev:216, opg:92, lr:7};
+  var TRUSTS = {
+    ROO:{name:'Right of Occupation Trust', d:'Your partner can keep living in the home. Your share then passes to the people you choose, such as your children.'},
+    LIT:{name:'Life Interest Trust', d:'Your partner can live in the home and receive income from your share for the rest of their life. The capital then passes to the people you choose.'},
+    FLIT:{name:'Flexible Life Interest Trust', d:'Like a Life Interest Trust, but your trustees can adapt later, for example releasing money if your partner’s needs change.'},
+    DT:{name:'Discretionary Trust', d:'Your trustees decide who receives what, and when. This can help protect what you leave from a beneficiary’s divorce, debts or overspending.'},
+    VDT:{name:'Vulnerable Person’s Discretionary Trust', d:'For a disabled beneficiary. It can help protect their means-tested support and may qualify for special tax treatment.'}
+  };
+  // Questions: id, text, help, show(answers)
+  var Q = [
+    {id:'partner', t:'Are you married, in a civil partnership, or living with a partner?', h:''},
+    {id:'together', t:'Would you like to plan together, so you both have your own documents?', h:'Couples usually make "mirror" documents, which cost less than two single ones.', show:function(a){return a.partner}},
+    {id:'hasWill', t:'Do you have a Will that you are happy still reflects your life today?', h:'Answer no if you do not have one, or if things have changed since you made it.'},
+    {id:'kids', t:'Do you have any children under 18?', h:'Your Will can name guardians to look after them.'},
+    {id:'home', t:'Do you own your home?', h:''},
+    {id:'joint', t:'Do you own it jointly with someone else?', h:'', show:function(a){return a.home}},
+    {id:'tic', t:'Do you know for certain that you own it as "tenants in common"?', h:'If you are not sure, answer no. Most couples own their home as "joint tenants" without knowing it.', show:function(a){return a.home && a.joint}},
+    {id:'stay', t:'If you died first, would you want your partner to be able to stay in the home, while your share is protected for your children or others?', h:'', show:function(a){return a.home && a.partner}},
+    {id:'rooEnough', t:'Is a right to keep living there enough, without any income from your share?', h:'', show:function(a){return a.home && a.partner && a.stay}},
+    {id:'flex', t:'Should your trustees be able to adapt later, for example releasing money if your partner’s needs change?', h:'', show:function(a){return a.home && a.partner && a.stay && a.rooEnough===false}},
+    {id:'vuln', t:'Is anyone you want to provide for disabled, or receiving (or likely to need) means-tested benefits?', h:'For example Universal Credit, or council-funded care.'},
+    {id:'protect', t:'Would you like to protect what you leave from a beneficiary’s divorce, debts or overspending?', h:'Or let trustees decide who needs help most when the time comes.'},
+    {id:'lpa', t:'Do you already have Lasting Powers of Attorney, for both health and money decisions?', h:'These let someone you trust act for you if you cannot.'}
+  ];
+  var a = {}, hist = [], picked = null, result = null, path = null;
+
+  function $(id){return document.getElementById(id)}
+  function show(id){['s-intro','s-q','s-pick','s-res','s-form','s-done'].forEach(function(s){$(s).hidden=(s!==id)}); window.scrollTo(0,0);}
+  function focusEl(id){var e=$(id); if(e){try{e.focus({preventScroll:true})}catch(x){}}}
+  function visible(q){return !q.show || q.show(a)}
+  function nextIndex(from){for(var i=from;i<Q.length;i++){if(visible(Q[i])) return i} return -1}
+  function totalVisible(){return Q.filter(visible).length}
+  function ask(i){
+    var q=Q[i]; hist.push(i);
+    var n=Q.slice(0,i+1).filter(visible).length, tot=totalVisible();
+    $('qcount').textContent='Question '+n;
+    $('bar').style.width=Math.round((n-1)/tot*100)+'%';
+    $('qtitle').textContent=q.t; $('qhelp').textContent=q.h||''; $('qhelp').hidden=!q.h;
+    show('s-q'); focusEl('qtitle');
+  }
+  function answer(v){
+    var i=hist[hist.length-1]; a[Q[i].id]=v;
+    // clear answers to questions that are now hidden
+    Q.forEach(function(q){ if(!visible(q)) delete a[q.id]; });
+    var n=nextIndex(i+1); if(n<0){ finish(); } else ask(n);
+  }
+  $('start').onclick=function(){a={};hist=[];picked=null;ask(nextIndex(0))};
+  $('yes').onclick=function(){answer(true)};
+  $('no').onclick=function(){answer(false)};
+  $('back').onclick=function(){hist.pop(); if(!hist.length){show('s-intro');return;} var i=hist.pop(); ask(i);};
+  $('skip').onclick=function(){picked=[]; show('s-pick'); focusEl('picktitle')};
+  $('pickback').onclick=function(){show('s-intro')};
+  $('pickgo').onclick=function(){
+    var v=Array.prototype.slice.call(document.querySelectorAll('.picks input:checked')).map(function(x){return x.value});
+    if(!v.length){$('pickerr').style.display='block';return;} $('pickerr').style.display='none';
+    picked=v; result=compute(null, v, $('p-mirror').checked); render();
+  };
+  function finish(){ $('bar').style.width='100%'; result=compute(a); render(); }
+
+  function money(n){return '£'+n.toLocaleString('en-GB')}
+
+  function compute(ans, manual, manualMirror){
+    var r={mirror:false, trusts:[], will:false, willReview:false, lpa:false, sev:false, guardians:false, sevHint:false, items:[], disb:[], fees:0, disbTotal:0, answers:ans?JSON.parse(JSON.stringify(ans)):null, manual:!!manual};
+    if(manual){
+      r.mirror=!!manualMirror;
+      r.trusts=manual.filter(function(x){return TRUSTS[x]});
+      r.will=manual.indexOf('WILL')>-1 || r.trusts.length>0;
+      r.lpa=manual.indexOf('LPA')>-1; r.sev=manual.indexOf('SEV')>-1;
+    } else {
+      r.mirror=!!(ans.partner && ans.together);
+      if(ans.stay){ r.trusts.push(ans.rooEnough ? 'ROO' : (ans.flex ? 'FLIT' : 'LIT')); }
+      if(ans.vuln) r.trusts.push('VDT');
+      if(ans.protect) r.trusts.push('DT');
+      r.will = !ans.hasWill || r.trusts.length>0;
+      r.willReview = !!ans.hasWill && r.trusts.length===0;
+      r.guardians = !!ans.kids;
+      r.lpa = !ans.lpa;
+      var homeTrust = r.trusts.some(function(t){return t==='ROO'||t==='LIT'||t==='FLIT'});
+      r.sev = !!(ans.home && ans.joint && !ans.tic && homeTrust);
+      r.sevHint = !!(ans.home && ans.joint && !ans.tic && !homeTrust);
+    }
+    var who = r.mirror ? 'for you both' : 'for you';
+    if(r.will){
+      var hasT=r.trusts.length>0;
+      var p = hasT ? (r.mirror?FEES.mirrorTrust:FEES.trust) : (r.mirror?FEES.mirrorWill:FEES.will);
+      r.items.push({key:'WILL', name:(hasT?(r.mirror?'Mirror Wills with a trust':'Will with a trust'):(r.mirror?'Mirror Wills':'Will')), price:p, sub:who});
+      r.fees+=p;
+    }
+    if(r.lpa){
+      var docs = r.mirror?4:2, lp = r.mirror?2*FEES.mirrorLpa:2*FEES.lpa;
+      r.items.push({key:'LPA', name:'Lasting Powers of Attorney', price:lp, sub:(r.mirror?'Health and Welfare, and Property and Financial Affairs, for you both (4 documents)':'Health and Welfare, and Property and Financial Affairs (2 documents)')});
+      r.fees+=lp; r.disb.push({name:'Office of the Public Guardian fee ('+docs+' x '+money(FEES.opg)+')', price:docs*FEES.opg}); r.disbTotal+=docs*FEES.opg;
+    }
+    if(r.sev){
+      r.items.push({key:'SEV', name:'Severing a joint tenancy', price:FEES.sev, sub:'So your share of the home can go into the trust in your Will'});
+      r.fees+=FEES.sev; r.disb.push({name:'Land Registry fee (usually '+money(FEES.lr)+')', price:FEES.lr}); r.disbTotal+=FEES.lr;
+    }
+    return r;
+  }
+
+  function el(tag, cls, html){var e=document.createElement(tag); if(cls) e.className=cls; if(html!=null) e.innerHTML=html; return e}
+  function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+
+  function render(){
+    var r=result, box=$('recs'); box.innerHTML='';
+    $('ressub').textContent = r.manual ? 'Based on what you ticked.' : 'Based on your answers.';
+    r.items.forEach(function(it){
+      var c=el('div','rec'); var top=el('div','top'); top.appendChild(el('h3',null,esc(it.name))); top.appendChild(el('span','price',money(it.price))); c.appendChild(top);
+      if(it.sub) c.appendChild(el('p',null,esc(it.sub)));
+      if(it.key==='WILL'){
+        if(r.trusts.length){
+          var ul=el('ul','trustlist');
+          r.trusts.forEach(function(t){ul.appendChild(el('li',null,'<strong>'+esc(TRUSTS[t].name)+'.</strong> '+esc(TRUSTS[t].d)))});
+          c.appendChild(ul);
+          if(r.trusts.length>1) c.appendChild(el('p',null,'Your consultant will confirm how these trusts work together in your Will.'));
+        } else c.appendChild(el('p',null,'Says who inherits, who deals with your estate, and who you trust to look after money.'));
+        if(r.guardians) c.appendChild(el('span','tag','Includes naming guardians for your children'));
+      }
+      box.appendChild(c);
+    });
+    if(r.willReview){ box.appendChild(el('div','none','<strong>Your Will</strong><p style="margin:4px 0 0">You are happy with your current Will. Keep it under review, especially if your family, home or health changes.</p>')); }
+    if(r.sevHint){ box.appendChild(el('div','rec','<h3>How you own your home</h3><p>If you own it as "joint tenants", your share passes automatically to the other owner, whatever your Will says. Worth checking at your consultation.</p>')); }
+    var tb=$('totalbox'); tb.innerHTML='';
+    if(r.items.length){
+      var t=el('div','total');
+      r.items.forEach(function(it){t.appendChild(el('div','row','<span>'+esc(it.name)+'</span><span>'+money(it.price)+'</span>'))});
+      t.appendChild(el('div','row big','<span>Heres Law fixed fees, including VAT</span><span>'+money(r.fees)+'</span>'));
+      if(r.disb.length){
+        r.disb.forEach(function(d){t.appendChild(el('div','row','<span>Plus '+esc(d.name)+', paid to the government</span><span>'+money(d.price)+'</span>'))});
+      }
+      tb.appendChild(t);
+      $('choicebox').hidden=false;
+    } else {
+      tb.appendChild(el('div','none','<strong>Good news</strong><p style="margin:4px 0 0">From your answers you may already have what you need. If anything changes, or you would like a second opinion, call us on 020 3514 5929.</p>'));
+      $('choicebox').hidden=true;
+    }
+    show('s-res'); focusEl('restitle');
+  }
+  $('resback').onclick=function(){ if(result&&result.manual){show('s-pick');return;} hist=[]; a={}; ask(nextIndex(0)); };
+
+  function openForm(p){
+    path=p;
+    var ready=p==='ready';
+    $('pathlabel').textContent= ready ? 'Book a free consultation' : 'Email my results';
+    $('formsub').textContent= ready ? 'We will call you within 48 hours to arrange your free consultation.' : 'We will email your results and fees to you. No call, no pressure.';
+    $('readyField').hidden=!ready; $('mobopt').textContent= ready ? '' : '(optional)';
+    $('partnerField').hidden = !(result && result.mirror);
+    $('send').textContent = ready ? 'Book my consultation' : 'Email my results';
+    $('formerr').style.display='none';
+    show('s-form'); focusEl('formtitle');
+  }
+  $('go-ready').onclick=function(){openForm('ready')};
+  $('go-info').onclick=function(){openForm('info')};
+  $('formback').onclick=function(){show('s-res')};
+
+  var f=$('f');
+  function val(id){return String($(id).value||'').trim()}
+  function mark(k,bad){var e=f.querySelector('[data-f="'+k+'"]'); if(e) e.classList.toggle('invalid',!!bad); return !bad}
+  function digits(s){return (s.match(/\d/g)||[]).length}
+  function validate(){
+    var ok=true, m=val('mobile'), needMob=path==='ready';
+    ok=mark('fullName',val('fullName').length<2)&&ok;
+    var mobBad = needMob ? !(digits(m)>=10&&digits(m)<=15&&/^[+\d\s()-]+$/.test(m)) : (m && !(digits(m)>=10&&digits(m)<=15&&/^[+\d\s()-]+$/.test(m)));
+    ok=mark('mobile',mobBad)&&ok;
+    ok=mark('email',!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(val('email')))&&ok;
+    if(path==='ready') ok=mark('ready',!$('ready').checked)&&ok; else mark('ready',false);
+    ok=mark('consent',!$('consent').checked)&&ok;
+    return ok;
+  }
+  f.addEventListener('input',function(e){var el=e.target.closest('[data-f]'); if(el&&el.classList.contains('invalid')) validate()});
+  f.addEventListener('change',function(e){var el=e.target.closest('[data-f]'); if(el&&el.classList.contains('invalid')) validate()});
+  f.addEventListener('submit',function(e){
+    e.preventDefault(); var fe=$('formerr'); fe.style.display='none';
+    if(!validate()){var first=f.querySelector('.invalid'); if(first){first.scrollIntoView({block:'center'}); var i=first.querySelector('input'); if(i) i.focus({preventScroll:true});} return;}
+    var r=result, send=$('send');
+    var payload={
+      path:path, fullName:val('fullName'), partnerName:(r.mirror?val('partnerName'):''), mobile:val('mobile'), email:val('email'),
+      readyConfirmed: path==='ready' && $('ready').checked, consent:true, website:val('website'),
+      mirror:r.mirror, manual:r.manual, trusts:r.trusts, will:r.will, lpa:r.lpa, sev:r.sev, guardians:r.guardians, willReview:r.willReview, sevHint:r.sevHint,
+      answers:r.answers
+    };
+    var label=send.textContent; send.disabled=true; send.textContent='Sending...';
+    function fail(msg){send.disabled=false; send.textContent=label; fe.textContent=msg||'Sorry, something went wrong. Please try again, or call us on 020 3514 5929.'; fe.style.display='block';}
+    fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)})
+      .then(function(res){return res.json()})
+      .then(function(j){
+        if(!j||!j.ok){fail(j&&j.message);return;}
+        var first=payload.fullName.split(/\s+/)[0];
+        $('donetitle').textContent='Thank you, '+first;
+        $('donetext').textContent = path==='ready'
+          ? 'We have your details. We will be in touch within 48 hours to confirm your free consultation. We have also emailed a copy of your results to '+payload.email+'.'
+          : 'We have emailed your results and fees to '+payload.email+'. When you are ready to go ahead, reply to that email or call us to book your free consultation.';
+        show('s-done'); focusEl('donetitle');
+      })
+      .catch(function(){fail()});
+  });
+})();
+</script>
+</body>
+</html>
