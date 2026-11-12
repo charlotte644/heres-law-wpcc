@@ -98,6 +98,18 @@ input:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px rgba(0,11
 .pick{display:flex;gap:12px;align-items:flex-start;border:1.5px solid #c9ced6;border-radius:12px;padding:12px 14px;cursor:pointer}
 .pick input{width:22px;height:22px;margin:1px 0 0;accent-color:var(--teal);flex:none}
 .pick:has(input:checked){border-color:var(--teal);background:var(--teal-bg)}
+/* slots */
+.slots{margin:4px 0 16px}
+.slots .lbl{margin-bottom:8px}
+.days{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px;-webkit-overflow-scrolling:touch}
+.day{flex:none;font:inherit;font-size:15px;font-weight:600;border:1.5px solid #c9ced6;background:#fff;color:var(--ink);border-radius:10px;padding:9px 12px;cursor:pointer;min-height:44px}
+.day[aria-pressed=true]{background:var(--navy);border-color:var(--navy);color:#fff}
+.times{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px}
+.time{font:inherit;font-size:16px;font-weight:600;border:1.5px solid #c9ced6;background:#fff;color:var(--ink);border-radius:10px;padding:11px 6px;cursor:pointer;min-height:46px}
+.time[aria-pressed=true]{background:var(--teal);border-color:var(--teal);color:#fff}
+.chosen{margin-top:10px;font-weight:600;color:var(--teal)}
+.slotmsg{font-size:15.5px;color:var(--muted)}
+.meetnote{background:var(--teal-bg);border-radius:12px;padding:12px 14px;font-size:15.5px;color:var(--ink);margin-bottom:16px}
 /* thanks */
 .okicon{width:58px;height:58px;border-radius:50%;background:var(--teal);display:grid;place-items:center;margin-bottom:14px}
 .okicon svg{width:30px;height:30px;stroke:#fff;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}
@@ -128,11 +140,11 @@ footer .contact{color:#fff;font-size:15px}
     <ul class="points">
       <li><b>1</b><span>About 10 short questions. Most people finish in two minutes.</span></li>
       <li><b>2</b><span>See your suggested services and an estimated fixed fee.</span></li>
-      <li><b>3</b><span>Book a free consultation if you are ready, or have your results emailed to you.</span></li>
+      <li><b>3</b><span>Book a free Google Meet consultation if you are ready, or have your results emailed to you.</span></li>
     </ul>
     <button class="btn btn-primary" id="start">Start the questions</button>
     <p style="text-align:center;margin-top:10px"><button class="btn btn-ghost" id="skip">I already know what I need</button></p>
-    <div class="free"><strong>Your first consultation is free</strong><p>Up to an hour, one to one, about your family. All our fees are fixed, agreed upfront and include VAT.</p></div>
+    <div class="free"><strong>Your first consultation is free</strong><p>Up to an hour, by Google Meet, so you can join from home. If you are making documents as a couple, you both need to join. All our fees are fixed, agreed upfront and include VAT.</p></div>
   </section>
 
   <!-- 2. question -->
@@ -174,12 +186,12 @@ footer .contact{color:#fff;font-size:15px}
     <p class="qhelp" id="ressub"></p>
     <div id="recs"></div>
     <div id="totalbox"></div>
-    <p class="note">This is a general guide based on your answers, not legal advice. In your free consultation we confirm what you need, and your fixed fee is set out in writing before any work starts.</p>
+    <p class="note">This is a general guide based on your answers, not legal advice. In your free consultation by Google Meet we confirm what you need, and your fixed fee is set out in writing before any work starts. If you are making documents as a couple, you both need to join the consultation.</p>
     <div id="choicebox">
       <h2 style="font-size:24px;margin-top:22px">How would you like to go ahead?</h2>
       <div class="choice2">
-        <button class="btn btn-primary" id="go-ready">I'm ready to go ahead<small>Book my free consultation. We will call you within 48 hours.</small></button>
-        <button class="btn btn-gold" id="go-info">Not yet, email me my results<small>No call. Book whenever you are ready.</small></button>
+        <button class="btn btn-primary" id="go-ready">I'm ready to go ahead<small>Choose a time for my free consultation by Google Meet.</small></button>
+        <button class="btn btn-gold" id="go-info">Not yet, email me my results<small>We will call you within 48 hours to see how we can support you further.</small></button>
       </div>
     </div>
     <div class="qnav"><button class="btn btn-ghost" id="resback">&larr; Change my answers</button></div>
@@ -193,9 +205,18 @@ footer .contact{color:#fff;font-size:15px}
     <div class="formcard">
       <form id="f" novalidate>
         <div class="field" data-f="fullName"><label class="lbl" for="fullName">Your full name</label><input type="text" id="fullName" autocomplete="name" maxlength="120"><p class="err">Please enter your full name.</p></div>
-        <div class="field" id="partnerField"><label class="lbl" for="partnerName">Your partner's name <span class="opt">(optional)</span></label><input type="text" id="partnerName" autocomplete="off" maxlength="120"></div>
-        <div class="field" data-f="mobile"><label class="lbl" for="mobile">Mobile number <span class="opt" id="mobopt"></span></label><input type="tel" id="mobile" autocomplete="tel" inputmode="tel" maxlength="30"><p class="err">Please enter a mobile number we can call.</p></div>
+        <div class="field" id="partnerField"><label class="lbl" for="partnerName">Your partner's name</label><input type="text" id="partnerName" autocomplete="off" maxlength="120"></div>
+        <div class="field" data-f="mobile"><label class="lbl" for="mobile">Mobile number</label><input type="tel" id="mobile" autocomplete="tel" inputmode="tel" maxlength="30"><p class="err">Please enter a mobile number we can call.</p></div>
         <div class="field" data-f="email"><label class="lbl" for="email">Email address</label><input type="email" id="email" autocomplete="email" inputmode="email" maxlength="160"><p class="err">Please enter a valid email address.</p></div>
+        <div class="field" data-f="partnerEmail" id="partnerEmailField"><label class="lbl" for="partnerEmail">Your partner's email <span class="opt">(optional, so they get the invite too)</span></label><input type="email" id="partnerEmail" autocomplete="off" inputmode="email" maxlength="160"><p class="err">Please check this email address, or leave it blank.</p></div>
+        <div class="slots" data-f="slot" id="slotField">
+          <div class="meetnote" id="meetnote">Your consultation is by Google Meet and lasts up to an hour.</div>
+          <span class="lbl">Choose a time</span>
+          <div id="slotbox"><p class="slotmsg">Loading available times...</p></div>
+          <div class="chosen" id="chosen" aria-live="polite"></div>
+          <p class="err">Please choose a time, or tick below for us to call you instead.</p>
+          <label class="tick" style="margin-top:12px"><input type="checkbox" id="nocall"><span>None of these times suit me. Please call me to arrange one.</span></label>
+        </div>
         <div class="hp" aria-hidden="true"><label for="website">Leave this empty</label><input type="text" id="website" tabindex="-1" autocomplete="off"></div>
         <div data-f="ready" id="readyField"><label class="tick strong"><input type="checkbox" id="ready"><span>I have seen the fees and I am ready to go ahead if the consultation confirms it is right for me.</span></label><p class="err" style="margin-top:-8px;margin-bottom:12px">Please tick to book. If you are not ready yet, go back and choose "email me my results".</p></div>
         <div data-f="consent"><label class="tick"><input type="checkbox" id="consent"><span>I agree to Heres Law contacting me by phone or email about this enquiry. Read our <a href="https://www.hereslaw.co.uk/privacy-policy.html" target="_blank" rel="noopener">privacy policy</a>.</span></label><p class="err" style="margin-top:-8px;margin-bottom:12px">Please tick to let us contact you.</p></div>
@@ -368,15 +389,46 @@ var ENDPOINT = 'https://script.google.com/macros/s/AKfycbzrf8VqyuU04wKGHbLFiWeAE
   }
   $('resback').onclick=function(){ if(result&&result.manual){show('s-pick');return;} hist=[]; a={}; ask(nextIndex(0)); };
 
+  var slot=null, slotsLoaded=false;
+  function esc2(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+  function renderSlots(days){
+    var box=$('slotbox'); box.innerHTML=''; slot=null; $('chosen').textContent='';
+    if(!days||!days.length){ box.innerHTML='<p class="slotmsg">There are no online times available right now. Tick the box below and we will call you within 48 hours to arrange one.</p>'; $('nocall').checked=true; return; }
+    var dayRow=document.createElement('div'); dayRow.className='days'; dayRow.setAttribute('role','group'); dayRow.setAttribute('aria-label','Choose a day');
+    var timeGrid=document.createElement('div'); timeGrid.className='times'; timeGrid.setAttribute('role','group'); timeGrid.setAttribute('aria-label','Choose a time');
+    function pickDay(d, btn){
+      Array.prototype.forEach.call(dayRow.children,function(b){b.setAttribute('aria-pressed','false')}); btn.setAttribute('aria-pressed','true');
+      timeGrid.innerHTML='';
+      d.times.forEach(function(tm){
+        var b=document.createElement('button'); b.type='button'; b.className='time'; b.setAttribute('aria-pressed','false');
+        var h=+tm.slice(0,2); b.textContent=(h>12?h-12:h)+':00'+(h<12?'am':'pm');
+        b.onclick=function(){Array.prototype.forEach.call(timeGrid.children,function(x){x.setAttribute('aria-pressed','false')}); b.setAttribute('aria-pressed','true'); slot={date:d.date,time:tm,label:d.long+' at '+b.textContent}; $('chosen').textContent='Your time: '+slot.label; $('nocall').checked=false; f.querySelector('[data-f="slot"]').classList.remove('invalid');};
+        timeGrid.appendChild(b);
+      });
+    }
+    days.forEach(function(d,i){
+      var b=document.createElement('button'); b.type='button'; b.className='day'; b.textContent=d.label; b.setAttribute('aria-pressed','false');
+      b.onclick=function(){pickDay(d,b)}; dayRow.appendChild(b); if(i===0) pickDay(d,b);
+    });
+    box.appendChild(dayRow); box.appendChild(timeGrid);
+  }
+  function loadSlots(){
+    $('slotbox').innerHTML='<p class="slotmsg">Loading available times...</p>';
+    fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify({action:'slots'})})
+      .then(function(r){return r.json()}).then(function(j){slotsLoaded=true; renderSlots(j&&j.ok?j.days:[])})
+      .catch(function(){slotsLoaded=true; renderSlots([])});
+  }
   function openForm(p){
     path=p;
-    var ready=p==='ready';
+    var ready=p==='ready', couple=!!(result && result.mirror);
     $('pathlabel').textContent= ready ? 'Book a free consultation' : 'Email my results';
-    $('formsub').textContent= ready ? 'We will call you within 48 hours to arrange your free consultation.' : 'We will email your results and fees to you. No call, no pressure.';
-    $('readyField').hidden=!ready; $('mobopt').textContent= ready ? '' : '(optional)';
-    $('partnerField').hidden = !(result && result.mirror);
+    $('formsub').textContent= ready ? 'Choose a time for your free consultation by Google Meet. We will send you the invitation straight away.' : 'We will email your results and fees to you, and call you within 48 hours to see how we can support you further.';
+    $('readyField').hidden=!ready; $('slotField').hidden=!ready;
+    $('partnerField').hidden = !couple; $('partnerEmailField').hidden = !(couple && ready);
+    $('meetnote').textContent = 'Your consultation is by Google Meet and lasts up to an hour.' + (couple ? ' As you are making documents as a couple, you both need to join.' : '');
     $('send').textContent = ready ? 'Book my consultation' : 'Email my results';
     $('formerr').style.display='none';
+    if(ready && !slotsLoaded) loadSlots();
     show('s-form'); focusEl('formtitle');
   }
   $('go-ready').onclick=function(){openForm('ready')};
@@ -388,12 +440,12 @@ var ENDPOINT = 'https://script.google.com/macros/s/AKfycbzrf8VqyuU04wKGHbLFiWeAE
   function mark(k,bad){var e=f.querySelector('[data-f="'+k+'"]'); if(e) e.classList.toggle('invalid',!!bad); return !bad}
   function digits(s){return (s.match(/\d/g)||[]).length}
   function validate(){
-    var ok=true, m=val('mobile'), needMob=path==='ready';
+    var ok=true, m=val('mobile'), pe=val('partnerEmail'), ready=path==='ready', couple=!!(result&&result.mirror);
     ok=mark('fullName',val('fullName').length<2)&&ok;
-    var mobBad = needMob ? !(digits(m)>=10&&digits(m)<=15&&/^[+\d\s()-]+$/.test(m)) : (m && !(digits(m)>=10&&digits(m)<=15&&/^[+\d\s()-]+$/.test(m)));
-    ok=mark('mobile',mobBad)&&ok;
+    ok=mark('mobile',!(digits(m)>=10&&digits(m)<=15&&/^[+\d\s()-]+$/.test(m)))&&ok;
     ok=mark('email',!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(val('email')))&&ok;
-    if(path==='ready') ok=mark('ready',!$('ready').checked)&&ok; else mark('ready',false);
+    ok=mark('partnerEmail', !!(couple && ready && pe && !/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(pe)))&&ok;
+    if(ready){ ok=mark('slot', !slot && !$('nocall').checked)&&ok; ok=mark('ready',!$('ready').checked)&&ok; } else { mark('ready',false); mark('slot',false); }
     ok=mark('consent',!$('consent').checked)&&ok;
     return ok;
   }
@@ -404,7 +456,8 @@ var ENDPOINT = 'https://script.google.com/macros/s/AKfycbzrf8VqyuU04wKGHbLFiWeAE
     if(!validate()){var first=f.querySelector('.invalid'); if(first){first.scrollIntoView({block:'center'}); var i=first.querySelector('input'); if(i) i.focus({preventScroll:true});} return;}
     var r=result, send=$('send');
     var payload={
-      path:path, fullName:val('fullName'), partnerName:(r.mirror?val('partnerName'):''), mobile:val('mobile'), email:val('email'),
+      path:path, fullName:val('fullName'), partnerName:(r.mirror?val('partnerName'):''), partnerEmail:(r.mirror&&path==='ready'?val('partnerEmail'):''), mobile:val('mobile'), email:val('email'),
+      slotDate:(path==='ready'&&slot&&!$('nocall').checked?slot.date:''), slotTime:(path==='ready'&&slot&&!$('nocall').checked?slot.time:''),
       readyConfirmed: path==='ready' && $('ready').checked, consent:true, website:val('website'),
       mirror:r.mirror, manual:r.manual, trusts:r.trusts, will:r.will, lpa:r.lpa, sev:r.sev, guardians:r.guardians, willReview:r.willReview, sevHint:r.sevHint,
       answers:r.answers
@@ -414,12 +467,17 @@ var ENDPOINT = 'https://script.google.com/macros/s/AKfycbzrf8VqyuU04wKGHbLFiWeAE
     fetch(ENDPOINT,{method:'POST',headers:{'Content-Type':'text/plain;charset=utf-8'},body:JSON.stringify(payload)})
       .then(function(res){return res.json()})
       .then(function(j){
-        if(!j||!j.ok){fail(j&&j.message);return;}
+        if(!j||!j.ok){ fail(j&&j.message); if(j&&(j.taken||j.retry)){ slotsLoaded=false; loadSlots(); } return; }
         var first=payload.fullName.split(/\s+/)[0];
-        $('donetitle').textContent='Thank you, '+first;
-        $('donetext').textContent = path==='ready'
-          ? 'We have your details. We will be in touch within 48 hours to confirm your free consultation. We have also emailed a copy of your results to '+payload.email+'.'
-          : 'We have emailed your results and fees to '+payload.email+'. When you are ready to go ahead, reply to that email or call us to book your free consultation.';
+        $('donetitle').textContent= j.booked ? 'You are booked in, '+first : 'Thank you, '+first;
+        var couple=!!(r.mirror);
+        if(j.booked){
+          $('donetext').innerHTML='Your free consultation is on <strong>'+esc2(j.when)+'</strong> with '+esc2(j.advisor)+', by Google Meet. We have sent the invitation and your results to '+esc2(payload.email)+'.'+(couple?' As you are making documents as a couple, you both need to join.':'')+(j.meet?'<br><br><a class="btn btn-primary" style="width:auto" href="'+esc2(j.meet)+'" target="_blank" rel="noopener">Google Meet link</a>':'');
+        } else {
+          $('donetext').textContent = path==='ready'
+            ? 'We have your details. We will call you within 48 hours to arrange your free consultation by Google Meet. We have emailed a copy of your results to '+payload.email+'.'
+            : 'We have emailed your results and fees to '+payload.email+'. We will call you within 48 hours to see how we can support you further.';
+        }
         show('s-done'); focusEl('donetitle');
       })
       .catch(function(){fail()});
